@@ -52,7 +52,7 @@ auto moveBodyWithForceGait(aris::dynamic::Model &model, const aris::dynamic::Pla
     double F[6]{ 0, 0, 0, 0, 0, 0 };
     double M[6]{ 1, 1, 1, 1, 1, 1 };
     double K[6]{ 0, 0, 0, 0, 0, 0 };
-    double C[6]{ 20, 20, 20, 50, 50, 50 };
+    double C[6]{ 30, 60, 30, 20, 20, 20 };
     double bodyAcc[4]{ 0 };
     static double bodyVel[4]{ 0 };
     static double bodyDisp[4]{ 0 };
@@ -63,7 +63,7 @@ auto moveBodyWithForceGait(aris::dynamic::Model &model, const aris::dynamic::Pla
     double forceOffsetAvg[6]{ 0 };
     double realForceData[6]{ 0 };
     double forceInBody[6]{ 0 };
-    double forceThreshold[6]{ 20, 20, 20, 30, 30, 30 }; //力传感器的触发阈值,单位N或Nm
+    double forceThreshold[6]{ 20, 20, 20, 10, 10, 10 }; //力传感器的触发阈值,单位N或Nm
     double forceMax[6]{ 100, 100, 100, 50, 50, 50 }; //力的上限
     for (int i = 0; i < 3; i++)
     {
@@ -82,8 +82,8 @@ auto moveBodyWithForceGait(aris::dynamic::Model &model, const aris::dynamic::Pla
         {
             std::fill(forceOffsetSum, forceOffsetSum + 6, 0);
 
-            std::fill(bodyDisp, bodyDisp + 3, 0);
-            std::fill(bodyVel, bodyVel + 3, 0);
+            std::fill(bodyDisp, bodyDisp + 4, 0);
+            std::fill(bodyVel, bodyVel + 4, 0);
         }
         for (int i = 0; i < 6; i++)
         {
