@@ -1,6 +1,6 @@
 #!/bin/bash
 
-spos=0
+spos=18
 
 echo 'write some shit to the sync manager at first to make the anybus chip happy'
 /opt/etherlab/bin/ethercat state INIT
