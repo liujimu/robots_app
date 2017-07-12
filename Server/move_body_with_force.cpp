@@ -49,13 +49,13 @@ auto moveBodyWithForceGait(aris::dynamic::Model &model, const aris::dynamic::Pla
     }
 
     //阻抗控制参数
-    double F[3]{ 0, 0, 0 };
-    double M[3]{ 1, 1, 1 };
-    double K[3]{ 0, 0, 0 };
-    double C[3]{ 50, 50, 50 };
-    double bodyAcc[3]{ 0 };
-    static double bodyVel[3]{ 0 };
-    static double bodyDisp[3]{ 0 };
+    double F[6]{ 0, 0, 0, 0, 0, 0 };
+    double M[6]{ 1, 1, 1, 1, 1, 1 };
+    double K[6]{ 0, 0, 0, 0, 0, 0 };
+    double C[6]{ 20, 20, 20, 50, 50, 50 };
+    double bodyAcc[4]{ 0 };
+    static double bodyVel[4]{ 0 };
+    static double bodyDisp[4]{ 0 };
     const double kClockPeriod{ 0.001 };
 
     //力传感器数据
@@ -127,19 +127,23 @@ auto moveBodyWithForceGait(aris::dynamic::Model &model, const aris::dynamic::Pla
         {
             for (int i = 0; i < 3; i++)
             {
-                F[i] = 2 * forceInBody[i] / forceMax[i];
+                F[i] = forceInBody[i] / forceMax[i];
             }
         }
+	if (std::fabs(forceInBody[4]) > forceThreshold[4])
+	{
+	    F[3] = forceInBody[4] /forceMax[4];
+	}
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 4; i++)
         {
             bodyAcc[i] = (F[i] - C[i] * bodyVel[i] - K[i] * bodyDisp[i]) / M[i];
             bodyVel[i] += bodyAcc[i] * kClockPeriod;
             bodyDisp[i] += bodyVel[i] * kClockPeriod;
         }
 
-        std::copy(bodyDisp, bodyDisp + 3, Peb);
-        robot.SetPeb(Peb, beginMak);
+        std::copy(bodyDisp, bodyDisp + 4, Peb);
+        robot.SetPeb(Peb, beginMak, "213");
         robot.SetPee(Pee, beginMak);
     }
 
