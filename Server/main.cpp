@@ -16,6 +16,7 @@ using namespace std;
 #include "move_body.h"
 #include "twist_waist.h"
 #include "say_hello.h"
+#include "move_body_with_force.h"
 
 #ifdef WIN32
 #define rt_printf printf
@@ -79,6 +80,8 @@ int main(int argc, char *argv[])
 	rs.addCmd("sw", swingParse, swingGait);
 	rs.addCmd("tw", twistWaistParse, twistWaistGait);
 	rs.addCmd("sh", sayHelloParse, sayHelloGait);
+	rs.addCmd("mbf", moveBodyWithForceParse, moveBodyWithForceGait);
+	rs.addCmd("mbfs", moveBodyWithForceStopParse, moveBodyWithForceGait);
 
 	rs.open();
 
