@@ -54,6 +54,16 @@ auto moveBodyGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBas
     auto &robot = static_cast<Robots::RobotBase &>(model);
     auto &param = static_cast<const mbParam &>(param_in);
 
+    //行程检测
+    static aris::server::ControlServer &cs = aris::server::ControlServer::instance();
+    const double safetyOffset{ 0.005 };
+    double pinUpBound[18]{ 0 };
+    double pinLowBound[18]{ 0 };
+    for (int i = 0; i < 18; ++i)
+    {
+        pinUpBound[i] = (double)cs.controller().motionAtAbs(i).maxPosCount() / cs.controller().motionAtAbs(i).pos2countRatio() - safetyOffset;
+        pinLowBound[i] = (double)cs.controller().motionAtAbs(i).minPosCount() / cs.controller().motionAtAbs(i).pos2countRatio() + safetyOffset;
+    }
     //初始化
     static aris::dynamic::FloatMarker beginMak{ robot.ground() };
     static double beginPee[18];
@@ -84,6 +94,18 @@ auto moveBodyGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBas
 
     robot.SetPeb(Peb, beginMak, "123");
     robot.SetPee(Pee, beginMak);
+    //行程检测
+    double Pin[18]{ 0 };
+    robot.GetPin(Pin);
+    bool isOverBound{ false };
+    for (int i = 0; i < 18; ++i)
+    {
+        if (Pin[i] > pinUpBound[i] || Pin[i] < pinLowBound)
+        {
+            rt_printf("Getting close to the travel limits.");
+            isOverBound = true;
+        }
+    }
 
     return param.totalCount - param.count - 1;
 }
