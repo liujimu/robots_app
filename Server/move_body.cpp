@@ -55,33 +55,17 @@ auto moveBodyGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBas
     auto &param = static_cast<const mbParam &>(param_in);
 
     //行程检测
-#ifdef UNIX
     static aris::server::ControlServer &cs = aris::server::ControlServer::instance();
-#endif
 
     const double safetyOffset{ 0 };
     double pinUpBound[18]{ 0 };
     double pinLowBound[18]{ 0 };
 
-#ifdef WIN32
-    //老虎电机教育机器人的行程参数
-    for (int i = 0; i < 18; i += 3)
-    {
-        pinUpBound[i] = 0.7745 - safetyOffset;
-        pinUpBound[i + 1] = 0.7900 - safetyOffset;
-        pinUpBound[i + 2] = 0.7900 - safetyOffset;
-        pinLowBound[i] = 0.5675 + safetyOffset;
-        pinLowBound[i + 1] = 0.5830 + safetyOffset;
-        pinLowBound[i + 2] = 0.5830 + safetyOffset;
-    }
-#endif
-#ifdef UNIX
     for (int i = 0; i < 18; ++i)
     {
         pinUpBound[i] = (double)cs.controller().motionAtAbs(i).maxPosCount() / cs.controller().motionAtAbs(i).pos2countRatio() - safetyOffset;
         pinLowBound[i] = (double)cs.controller().motionAtAbs(i).minPosCount() / cs.controller().motionAtAbs(i).pos2countRatio() + safetyOffset;
     }
-#endif
 
     //初始化
     static aris::dynamic::FloatMarker beginMak{ robot.ground() };
@@ -111,6 +95,20 @@ auto moveBodyGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBas
         robot.SetPeb(targetPeb, beginMak, "123");
         robot.SetPee(Pee, beginMak);
         robot.GetPin(targetPin);
+
+        rt_printf("pinUpBound:\n %f %f %f\n %f %f %f\n %f %f %f\n %f %f %f\n %f %f %f\n %f %f %f\n",
+            pinUpBound[0], pinUpBound[1], pinUpBound[2], pinUpBound[3], pinUpBound[4], pinUpBound[5], 
+            pinUpBound[6], pinUpBound[7], pinUpBound[8], pinUpBound[9], pinUpBound[10], pinUpBound[11], 
+            pinUpBound[12], pinUpBound[13], pinUpBound[14], pinUpBound[15], pinUpBound[16], pinUpBound[17]);
+        rt_printf("pinLowBound:\n %f %f %f\n %f %f %f\n %f %f %f\n %f %f %f\n %f %f %f\n %f %f %f\n",
+            pinLowBound[0], pinLowBound[1], pinLowBound[2], pinLowBound[3], pinLowBound[4], pinLowBound[5],
+            pinLowBound[6], pinLowBound[7], pinLowBound[8], pinLowBound[9], pinLowBound[10], pinLowBound[11],
+            pinLowBound[12], pinLowBound[13], pinLowBound[14], pinLowBound[15], pinLowBound[16], pinLowBound[17]);
+        rt_printf("targetPin:\n %f %f %f\n %f %f %f\n %f %f %f\n %f %f %f\n %f %f %f\n %f %f %f\n",
+            targetPin[0], targetPin[1], targetPin[2], targetPin[3], targetPin[4], targetPin[5], 
+            targetPin[6], targetPin[7], targetPin[8], targetPin[9], targetPin[10], targetPin[11], 
+            targetPin[12], targetPin[13], targetPin[14], targetPin[15], targetPin[16], targetPin[17]);
+ 
         bool isOverStroke{ false };
         for (int i = 0; i < 18; ++i)
         {
@@ -127,6 +125,8 @@ auto moveBodyGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBas
         }
         if (isOverStroke)
         {
+            robot.SetPeb(Peb, beginMak, "123");
+            robot.SetPee(Pee, beginMak);
             return 0;
         }
     }

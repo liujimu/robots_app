@@ -71,11 +71,11 @@ auto moveBodyWithForceGait(aris::dynamic::Model &model, const aris::dynamic::Pla
 
     if (param.count == 0)
     {
-        rt_printf("pinUpBound:\n%f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f\n",
+        rt_printf("pinUpBound:\n %f %f %f\n %f %f %f\n %f %f %f\n %f %f %f\n %f %f %f\n %f %f %f\n",
             pinUpBound[0], pinUpBound[1], pinUpBound[2], pinUpBound[3], pinUpBound[4], pinUpBound[5], 
             pinUpBound[6], pinUpBound[7], pinUpBound[8], pinUpBound[9], pinUpBound[10], pinUpBound[11], 
             pinUpBound[12], pinUpBound[13], pinUpBound[14], pinUpBound[15], pinUpBound[16], pinUpBound[17]);
-        rt_printf("pinLowBound:\n%f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f\n",
+        rt_printf("pinLowBound:\n %f %f %f\n %f %f %f\n %f %f %f\n %f %f %f\n %f %f %f\n %f %f %f\n",
             pinLowBound[0], pinLowBound[1], pinLowBound[2], pinLowBound[3], pinLowBound[4], pinLowBound[5],
             pinLowBound[6], pinLowBound[7], pinLowBound[8], pinLowBound[9], pinLowBound[10], pinLowBound[11],
             pinLowBound[12], pinLowBound[13], pinLowBound[14], pinLowBound[15], pinLowBound[16], pinLowBound[17]);
