@@ -51,7 +51,7 @@ auto moveBodyWithForceGait(aris::dynamic::Model &model, const aris::dynamic::Pla
     //阻抗控制参数
     double F[6]{ 0, 0, 0, 0, 0, 0 };
     double M[6]{ 1, 1, 1, 1, 1, 1 };
-    static double K[6]{ 0, 0, 0, 0, 0, 0 };
+    double K[6]{ 0, 0, 0, 0, 0, 0 };
     double C[6]{ 30, 60, 30, 20, 20, 20 };
     double bodyAcc[4]{ 0 };
     static double bodyVel[4]{ 0 };
@@ -181,14 +181,6 @@ auto moveBodyWithForceGait(aris::dynamic::Model &model, const aris::dynamic::Pla
                 rt_printf("Getting close to the travel limits.");
                 isOverBound = true;
             }
-        }
-        if (isOverBound)
-        {
-            std::fill(K, K + 6, 10);
-        }
-        else
-        {
-            std::fill(K, K + 6, 0);
         }
     }
 
