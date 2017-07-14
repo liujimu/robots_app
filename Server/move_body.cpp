@@ -100,7 +100,7 @@ auto moveBodyGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBas
     bool isOverBound{ false };
     for (int i = 0; i < 18; ++i)
     {
-        if (Pin[i] > pinUpBound[i] || Pin[i] < pinLowBound)
+        if (Pin[i] > pinUpBound[i] || Pin[i] < pinLowBound[i])
         {
             rt_printf("Getting close to the travel limits.");
             isOverBound = true;
