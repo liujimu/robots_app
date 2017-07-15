@@ -6,8 +6,9 @@
 /*
             <mbf default="mbf_param">
                 <mbf_param type="group">
-                    <totalCount abbreviation="t" type="int" default="2000"/>
-                    <h abbreviation="h" type="double" default="0"/>
+                    <totalCount abbreviation="t" type="int" default="1500"/>
+                    <h abbreviation="h" type="double" default="0.04"/>
+                    <offset abbreviation="o" type="double" default="0.02"/>
                 </mbf_param>
             </mbf>
             <mbfs/>
@@ -61,8 +62,9 @@ private:
 /*gait parameters*/
 struct mbfParam final:public aris::server::GaitParamBase
 {
-    std::int32_t totalCount{ 2000 };
+    std::int32_t totalCount{ 1500 };
     double h{ 0.04 };
+    double offset{ 0.02 };
 };
 
 /*parse function*/

@@ -24,6 +24,10 @@ auto moveBodyWithForceParse(const std::string &cmd, const std::map<std::string, 
         {
             param.h = std::stod(i.second);
         }
+        else if (i.first == "offset")
+        {
+            param.offset = std::stod(i.second);
+        }
     }
     MbfState::getState().isStopping() = false;
     msg.copyStruct(param);
@@ -50,7 +54,7 @@ auto moveBodyWithForceGait(aris::dynamic::Model &model, const aris::dynamic::Pla
 
     //行程检测
     static aris::server::ControlServer &cs = aris::server::ControlServer::instance();
-    const double safetyOffset{ 0.02 };
+    double safetyOffset = param.offset;
     double pinUpBound[18]{ 0 };
     double pinLowBound[18]{ 0 };
     for (int i = 0; i < 18; ++i)

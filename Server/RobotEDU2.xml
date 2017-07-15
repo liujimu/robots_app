@@ -552,21 +552,29 @@
                     <roll abbreviation="w" type="double" default="0"/>
                 </mb_param>
             </mb>
-	    <sh default="sh_param">
-		    <sh_param type="group">
-			    <totalCount abbreviation="t" type="int" default="2000"/>
-			    <stepLength abbreviation="d" type="double" default="0.2"/>
-			    <stepHeight abbreviation="h" type="double" default="0.05"/>
-			    <bodyUp abbreviation="u" type="double" default="0.04"/>
-			    <bodyPitch abbreviation="p" type="double" default="20"/>
-			    <helloAmplitude abbreviation="a" type="double" default="0.1"/>
-			    <helloTimes abbreviation="n" type="int" default="1"/>
-			    <direction type="unique" default="backward">
-			    <forward abbreviation="f"/>
-			    <backward abbreviation="b"/>
-			    </direction>
-		    </sh_param>
-	    </sh>
+            <mbf default="mbf_param">
+                <mbf_param type="group">
+                    <totalCount abbreviation="t" type="int" default="1500"/>
+                    <h abbreviation="h" type="double" default="0.04"/>
+                    <offset abbreviation="o" type="double" default="0.02"/>
+                </mbf_param>
+            </mbf>
+            <mbfs/>
+            <sh default="sh_param">
+                <sh_param type="group">
+                    <totalCount abbreviation="t" type="int" default="2000"/>
+                    <stepLength abbreviation="d" type="double" default="0.2"/>
+                    <stepHeight abbreviation="h" type="double" default="0.05"/>
+                    <bodyUp abbreviation="u" type="double" default="0.04"/>
+                    <bodyPitch abbreviation="p" type="double" default="20"/>
+                    <helloAmplitude abbreviation="a" type="double" default="0.1"/>
+                    <helloTimes abbreviation="n" type="int" default="1"/>
+                    <direction type="unique" default="backward">
+                        <forward abbreviation="f"/>
+                        <backward abbreviation="b"/>
+                    </direction>
+                </sh_param>
+            </sh>
             <sw default="sw_param">
                 <sw_param type="group">
                     <totalCount abbreviation="t" type="int" default="8000"/>
@@ -586,20 +594,13 @@
                     <height abbreviation="h" type="double" default="0"/>
                 </tw_param>
             </tw>
-            <mbf default="mbf_param">
-                <mbf_param type="group">
-                    <forceThreshold abbreviation="t" type="double" default="20"/>
-                    <forceMaximum abbreviation="m" type="double" default="100"/>
-                </mbf_param>
-            </mbf>
-            <mbfs/>
         </Commands>
     </Server>
     <Controller>
         <EtherCat>
             <SlaveType>
                 <ElmoSoloWhistle product_code="0x00030924" vender_id="0x0000009a" alias="0" distributed_clock="0x0300">
-                     <PDO>
+                    <PDO>
                         <index_1605 index="0x1605" is_tx="false">
                             <TargetPosition index="0x607A" subindex="0x00" type="int32"/>
                             <TargetVelocity index="0x60FF" subindex="0x00" type="int32"/>
@@ -638,7 +639,7 @@
                     </SDO>
                 </ElmoSoloWhistle>
                 <Faulhaber product_code="0x00002d51" vender_id="0x00000147" alias="0" distributed_clock="0x0300">
-                     <PDO>
+                    <PDO>
                         <index_1600 index="0x1600" is_tx="false">
                             <TargetPosition index="0x607A" subindex="0x00" type="int32"/>
                             <TargetVelocity index="0x60FF" subindex="0x00" type="int32"/>
@@ -673,7 +674,7 @@
                     </SDO>
                 </Faulhaber>
                 <CopleyAE2 product_code="0x00001050" vender_id="0x000000ab" alias="0" distributed_clock="0x0300">
-                     <PDO>
+                    <PDO>
                         <index_1600 index="0x1600" is_tx="false">
                             <A_TargetPosition index="0x607A" subindex="0x00" type="int32"/>
                             <A_TargetVelocity index="0x60FF" subindex="0x00" type="int32"/>
@@ -728,15 +729,15 @@
                 </CopleyAE2>
                 <RuiCongCombo product_code="0x00000036" vender_id="0xe000001b" alias="0">
                     <PDO>
-                      <index_1a01 index="0x1a01" is_tx="true">
-                        <Fx index="0x20d2" subindex="0x01" type="int32"/>
-                        <Fy index="0x20d2" subindex="0x02" type="int32"/>
-                        <Fz index="0x20d2" subindex="0x03" type="int32"/>
-                        <Mx index="0x20d2" subindex="0x04" type="int32"/>
-                        <My index="0x20d2" subindex="0x05" type="int32"/>
-                        <Mz index="0x20d2" subindex="0x06" type="int32"/>
-                      </index_1a01>
-                      <!--
+                        <index_1a01 index="0x1a01" is_tx="true">
+                            <Fx index="0x20d2" subindex="0x01" type="int32"/>
+                            <Fy index="0x20d2" subindex="0x02" type="int32"/>
+                            <Fz index="0x20d2" subindex="0x03" type="int32"/>
+                            <Mx index="0x20d2" subindex="0x04" type="int32"/>
+                            <My index="0x20d2" subindex="0x05" type="int32"/>
+                            <Mz index="0x20d2" subindex="0x06" type="int32"/>
+                        </index_1a01>
+                        <!--
                       <index_1a02 index="0x1a02" is_tx="true">
                         <Fx index="0x20dc" subindex="0x01" type="int32"/>
                         <Fy index="0x20dc" subindex="0x02" type="int32"/>
@@ -778,22 +779,22 @@
                         <Mz index="0x2104" subindex="0x06" type="int32"/>
                       </index_1a06>
                       -->
-                      <index_1600 index="0x1600" is_tx="false">
-                        <Sna index="0x2064" subindex="0x01" type="uint8"/>
-                      </index_1600>
-                      <index_1601 index="0x1601" is_tx="false">
-                        <Snr1 index="0x206e" subindex="0x01" type="uint8"/>
-                        <Snr2 index="0x206e" subindex="0x02" type="uint8"/>
-                        <Snr3 index="0x206e" subindex="0x03" type="uint8"/>
-                        <Snr4 index="0x206e" subindex="0x04" type="uint8"/>
-                        <Snr5 index="0x206e" subindex="0x05" type="uint8"/>
-                        <Snr6 index="0x206e" subindex="0x06" type="uint8"/>
-                        <Snr7 index="0x206e" subindex="0x07" type="uint8"/>
-                        <Snr8 index="0x206e" subindex="0x08" type="uint8"/>
-                      </index_1601>
+                        <index_1600 index="0x1600" is_tx="false">
+                            <Sna index="0x2064" subindex="0x01" type="uint8"/>
+                        </index_1600>
+                        <index_1601 index="0x1601" is_tx="false">
+                            <Snr1 index="0x206e" subindex="0x01" type="uint8"/>
+                            <Snr2 index="0x206e" subindex="0x02" type="uint8"/>
+                            <Snr3 index="0x206e" subindex="0x03" type="uint8"/>
+                            <Snr4 index="0x206e" subindex="0x04" type="uint8"/>
+                            <Snr5 index="0x206e" subindex="0x05" type="uint8"/>
+                            <Snr6 index="0x206e" subindex="0x06" type="uint8"/>
+                            <Snr7 index="0x206e" subindex="0x07" type="uint8"/>
+                            <Snr8 index="0x206e" subindex="0x08" type="uint8"/>
+                        </index_1601>
                     </PDO>
                     <SDO>
-                      <Sync index="0x2064" subindex="0x0" type="uint8" write="false"/>
+                        <Sync index="0x2064" subindex="0x0" type="uint8" write="false"/>
                     </SDO>
                 </RuiCongCombo>
                 <AtiForceSensor product_code="0x26483052" vender_id="0x00000732" alias="0">
