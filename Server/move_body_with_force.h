@@ -6,8 +6,8 @@
 /*
             <mbf default="mbf_param">
                 <mbf_param type="group">
-                    <forceThreshold abbreviation="t" type="double" default="20"/>
-                    <forceMaximum abbreviation="m" type="double" default="100"/>
+                    <totalCount abbreviation="t" type="int" default="2000"/>
+                    <h abbreviation="h" type="double" default="0"/>
                 </mbf_param>
             </mbf>
             <mbfs/>
@@ -61,8 +61,8 @@ private:
 /*gait parameters*/
 struct mbfParam final:public aris::server::GaitParamBase
 {
-    double forceThreshold{ 20 };
-    double forceMaximum{ 100 };
+    std::int32_t totalCount{ 2000 };
+    double h{ 0.04 };
 };
 
 /*parse function*/
