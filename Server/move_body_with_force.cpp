@@ -137,9 +137,9 @@ auto moveBodyWithForceGait(aris::dynamic::Model &model, const aris::dynamic::Pla
             std::copy(walkBeginPee, walkBeginPee + 18, Pee);
             for (int i = leg_begin_id; i < 18; i += 6)
             {
-                Pee[i] += (beginPee[i] - walkBeginPee[i])*(1 - std::cos(PI*s)) / 2;
+                Pee[i] += (beginPee[i] - walkBeginPee[i])*(1 - std::cos(s)) / 2;
                 Pee[i + 1] += param.h*std::sin(s);
-                Pee[i + 2] += (beginPee[i + 2] - walkBeginPee[i + 2])*(1 - std::cos(PI*s)) / 2;
+                Pee[i + 2] += (beginPee[i + 2] - walkBeginPee[i + 2])*(1 - std::cos(s)) / 2;
             }
 
             robot.SetPeb(Peb, beginMak);
