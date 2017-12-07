@@ -13,7 +13,7 @@
                         <leg abbreviation="l" type="intArray" default="0"/>
                     </leg_param>
                     <stepNumber abbreviation="n" type="intArray" default="1"/>
-                    <totalCount abbreviation="t" type="intArray" default="1500"/>
+                    <totalCount abbreviation="t" type="intArray" default="2000"/>
                     <margin_offset abbreviation="m" type="double" default="0.005"/>
                 </rc2_param>
             </rc2>
@@ -40,23 +40,23 @@
 
 struct rc2Param final:public aris::server::GaitParamBase
 {
-    std::int32_t totalCount{ 3000 };
+    std::int32_t totalCount{ 2000 };
     bool active_leg[6]{ true,true,true,true,true,true };
     double margin_offset{ 0.005 };//meter
     double targetPee[2][18]
     {
-        {   -0.43,   -0.12,   -0.7448,
-            -0.86,   -0.12,    0,
-            -0.43,   -0.12,    0.7448,
+        {  -0.43,   -0.12,   -0.7448,
+           -0.86,   -0.12,    0,
+           -0.43,   -0.12,    0.7448,
             0.43,   -0.12,   -0.7448,
             0.86,   -0.12,    0,
             0.43,   -0.12,    0.7448 },
-       {    -0.30,   -0.50,   -0.52,
-            -0.60,   -0.50,    0,
-            -0.30,   -0.50,    0.52,
-            0.30,   -0.50,   -0.52,
-            0.60,   -0.50,    0,
-            0.30,   -0.50,    0.52 };
+        {  -0.30,   -0.58,   -0.52,
+           -0.60,   -0.58,    0,
+           -0.30,   -0.58,    0.52,
+            0.30,   -0.58,   -0.52,
+            0.60,   -0.58,    0,
+            0.30,   -0.58,    0.52 };
 
     };
     int stepNumber{ 1 };
