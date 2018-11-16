@@ -116,7 +116,7 @@ auto moveBodyWithForceGait(aris::dynamic::Model &model, const aris::dynamic::Pla
         }
         for (int i = 0; i < 6; i++)
         {
-            forceOffsetSum[i] += 10 * param.ruicong_data->at(0).force[0].fce[i];
+            forceOffsetSum[i] += 10 * param.fzj_data->at(0).fsr_data[0].fce[i];
         }
     }
     else
@@ -170,6 +170,9 @@ auto moveBodyWithForceGait(aris::dynamic::Model &model, const aris::dynamic::Pla
                 }
             }
             //转换到机器人身体坐标系
+            double forceSensorMakPe[6]{ 0, 0, 0, 0, -PI/2, 0 };
+            double forceSensorMakPm[16]{ 0 };
+            aris::dynamic::s_pe2pm(forceSensorMakPe,forceSensorMakPm);
             aris::dynamic::s_f2f(*robot.forceSensorMak().prtPm(), realForceData, forceInBody);
             //显示力的初始值
             if (param.count == 100)
