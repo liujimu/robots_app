@@ -576,7 +576,29 @@
                     <walkStepHeight abbreviation="h" type="double" default="0.03"/>
                     <n abbreviation="n" type="int" default="1"/>
                 </qg_param>
-            </qg>			
+            </qg>
+            <sm default="sm_param">
+                <sm_param type="group">
+                    <totalCount abbreviation="t" type="int" default="120000"/>
+                    <dir_param type="unique" default="y">
+                        <y abbreviation="y"/>
+                        <u abbreviation="u"/>
+                        <w abbreviation="w"/>
+                    </dir_param>
+                    <cycle abbreviation="c" type="double" default="6"/>
+                    <radius abbreviation="r" type="double" default="0.6042"/>
+                </sm_param>
+            </sm>
+            <lf default="lf_param">
+                <lf_param type="group">
+                    <totalCount abbreviation="t" type="int" default="720000"/>
+                    <dir_param type="unique" default="y">
+                        <y abbreviation="y"/>
+                        <u abbreviation="u"/>
+                        <w abbreviation="w"/>
+                    </dir_param>
+                </lf_param>
+            </lf>
             <ro/>
         </Commands>
     </Server>
