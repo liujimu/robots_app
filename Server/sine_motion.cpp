@@ -67,29 +67,54 @@ auto sineMotionGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamB
     std::fill(Peb, Peb + 6, 0);
     std::copy(beginPee, beginPee + 18, Pee);
 
-    const double t = 0.001*(param.count + 1);
-
-    switch (param.dir)
+    const int preparation_count{ 1500 };
+    if (param.count <= preparation_count)
     {
-    case 1:
-        Peb[1] = param.amp*std::sin(2 * PI / param.cycle*t);
-        break;
-    case 3:
-        Peb[3] = param.amp*std::sin(2 * PI / param.cycle*t);
-        Peb[1] = param.radius*(1 - std::cos(Peb[3]));
-        Peb[2] = -param.radius*std::sin(Peb[3]);
-        break;
-    case 5:
-        Peb[5] = param.amp*std::sin(2 * PI / param.cycle*t);
-        Peb[0] = param.radius*std::sin(Peb[5]);
-        Peb[1] = param.radius*(1 - std::cos(Peb[5]));
-        break;
-    default:
-        break;
+        const double s = -0.5 * cos(PI * (param.count + 1) / preparation_count) + 0.5;//s ´Ó0µ½1.
+        switch (param.dir)
+        {
+        case 1:
+            Peb[1] = param.amp*s;
+            break;
+        case 3:
+            Peb[3] = param.amp*s;
+            Peb[1] = param.radius*(1 - std::cos(Peb[3]));
+            Peb[2] = -param.radius*std::sin(Peb[3]);
+            break;
+        case 5:
+            Peb[5] = param.amp*s;
+            Peb[0] = param.radius*std::sin(Peb[5]);
+            Peb[1] = param.radius*(1 - std::cos(Peb[5]));
+            break;
+        default:
+            break;
+        }
+    }
+    else
+    {
+        const double t = 0.001*(param.count - preparation_count + 1);
+        switch (param.dir)
+        {
+        case 1:
+            Peb[1] = param.amp*std::cos(2 * PI / param.cycle*t);
+            break;
+        case 3:
+            Peb[3] = param.amp*std::cos(2 * PI / param.cycle*t);
+            Peb[1] = param.radius*(1 - std::cos(Peb[3]));
+            Peb[2] = -param.radius*std::sin(Peb[3]);
+            break;
+        case 5:
+            Peb[5] = param.amp*std::cos(2 * PI / param.cycle*t);
+            Peb[0] = param.radius*std::sin(Peb[5]);
+            Peb[1] = param.radius*(1 - std::cos(Peb[5]));
+            break;
+        default:
+            break;
+        }
     }
 
     robot.SetPeb(Peb, beginMak, "123");
     robot.SetPee(Pee, beginMak);
 
-    return param.totalCount - param.count - 1;
+    return param.totalCount + preparation_count - param.count - 1;
 }
