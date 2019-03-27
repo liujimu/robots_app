@@ -35,15 +35,15 @@ int main(int argc, char *argv[])
 
 	if (std::string(argv[1]) == "EDU6")
 	{
-		xml_address = "../../Server/RobotEDU6.xml";
+		xml_address = "../../resource/RobotEDU6.xml";
 	}
 	else if (std::string(argv[1]) == "EDU6C")
 	{
-		xml_address = "../../Server/RobotEDU6_cali.xml";
+		xml_address = "../../resource/RobotEDU6_cali.xml";
 	}
 	else if (std::string(argv[1]) == "EDU6CP")
 	{
-		xml_address = "../../Server/RobotEDU6_comp.xml";
+		xml_address = "../../resource/RobotEDU6_comp.xml";
 	}
 	else
 	{
