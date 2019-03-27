@@ -12,11 +12,11 @@ using namespace std;
 #include <Robot_Gait.h>
 #include <Robot_Type_I.h>
 
-#include "swing.h"
 #include "move_body.h"
+#include "adjust_pee.h"
+#include "swing.h"
 #include "twist_waist.h"
 #include "say_hello.h"
-#include "move_body_with_force.h"
 #include "find_joint_center.h"
 #include "calibration.h"
 
@@ -33,21 +33,18 @@ int main(int argc, char *argv[])
 {
 	std::string xml_address;
 
-	if (std::string(argv[1]) == "EDU6")
+	if (argc <= 1)
 	{
-		xml_address = "../../resource/RobotEDU6.xml";
+		std::cout << "you did not type in robot name, in this case ROBOT-XIII will start" << std::endl;
+		xml_address = "../../resource/Robot_XIII.xml";
 	}
-	else if (std::string(argv[1]) == "EDU6C")
+	else if (std::string(argv[1]) == "XIII")
 	{
-		xml_address = "../../resource/RobotEDU6_cali.xml";
-	}
-	else if (std::string(argv[1]) == "EDU6CP")
-	{
-		xml_address = "../../resource/RobotEDU6_comp.xml";
+		xml_address = "../../resource/Robot_XIII.xml";
 	}
 	else
 	{
-		throw std::runtime_error("invalid robot name, please type in EDU6");
+		throw std::runtime_error("invalid robot name, please type in III or VIII");
 	}
 	
 	auto &rs = aris::server::ControlServer::instance();
@@ -61,14 +58,15 @@ int main(int argc, char *argv[])
 	rs.addCmd("rc", Robots::recoverParse, Robots::recoverGait);
 	rs.addCmd("wk", Robots::walkParse, Robots::walkGait);
 	rs.addCmd("ro", Robots::resetOriginParse, Robots::resetOriginGait);
+	
+	//liujimu's gaits
 	rs.addCmd("mb", moveBodyParse, moveBodyGait);
-	rs.addCmd("mbf", moveBodyWithForceParse, moveBodyWithForceGait);
-	rs.addCmd("mbfs", moveBodyWithForceStopParse, moveBodyWithForceGait);
+	rs.addCmd("ap", moveBodyParse, moveBodyGait);
 	rs.addCmd("sw", swingParse, swingGait);
 	rs.addCmd("tw", twistWaistParse, twistWaistGait);
 	rs.addCmd("sh", sayHelloParse, sayHelloGait);
 	rs.addCmd("fjc", findJointCenterParse, findJointCenterGait);
-	rs.addCmd("cl", calibrationParse, calibrationGait);
+	rs.addCmd("cl", calibrationParse, calibrationGait);	
 
 	rs.open();
 
@@ -84,5 +82,7 @@ int main(int argc, char *argv[])
 	});
 	aris::core::runMsgLoop();
 	
+	
+
 	return 0;
 }
