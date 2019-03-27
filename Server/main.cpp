@@ -17,6 +17,8 @@ using namespace std;
 #include "twist_waist.h"
 #include "say_hello.h"
 #include "move_body_with_force.h"
+#include "find_joint_center.h"
+#include "calibration.h"
 
 #ifdef WIN32
 #define rt_printf printf
@@ -31,38 +33,21 @@ int main(int argc, char *argv[])
 {
 	std::string xml_address;
 
-	if (argc <= 1)
+	if (std::string(argv[1]) == "EDU6")
 	{
-		std::cout << "you did not type in robot name, in this case ROBOT-III will start" << std::endl;
-		xml_address = "/usr/Robots/resource/Robot_Type_I/Robot_XII/Robot_XII.xml";
+		xml_address = "../../Server/RobotEDU6.xml";
 	}
-	else if (std::string(argv[1]) == "XII")
+	else if (std::string(argv[1]) == "EDU6C")
 	{
-		xml_address = "/usr/Robots/resource/Robot_Type_I/Robot_XII/Robot_XII.xml";
+		xml_address = "../../Server/RobotEDU6_cali.xml";
 	}
-	else if (std::string(argv[1]) == "FH")
+	else if (std::string(argv[1]) == "EDU6CP")
 	{
-		xml_address = "../../Server/RobotFaulhaber.xml";
-	}
-	else if (std::string(argv[1]) == "CP")
-	{
-		xml_address = "../../Server/RobotCopley.xml";
-	}
-	else if (std::string(argv[1]) == "EL")
-	{
-		xml_address = "../../Server/RobotElmo.xml";
-	}
-	else if (std::string(argv[1]) == "EDU")
-	{
-		xml_address = "../../Server/RobotEDU.xml";
-	}
-	else if (std::string(argv[1]) == "EDU2")
-	{
-		xml_address = "../../Server/RobotEDU2.xml";
+		xml_address = "../../Server/RobotEDU6_comp.xml";
 	}
 	else
 	{
-		throw std::runtime_error("invalid robot name, please type in XII");
+		throw std::runtime_error("invalid robot name, please type in EDU6");
 	}
 	
 	auto &rs = aris::server::ControlServer::instance();
@@ -77,11 +62,13 @@ int main(int argc, char *argv[])
 	rs.addCmd("wk", Robots::walkParse, Robots::walkGait);
 	rs.addCmd("ro", Robots::resetOriginParse, Robots::resetOriginGait);
 	rs.addCmd("mb", moveBodyParse, moveBodyGait);
+	rs.addCmd("mbf", moveBodyWithForceParse, moveBodyWithForceGait);
+	rs.addCmd("mbfs", moveBodyWithForceStopParse, moveBodyWithForceGait);
 	rs.addCmd("sw", swingParse, swingGait);
 	rs.addCmd("tw", twistWaistParse, twistWaistGait);
 	rs.addCmd("sh", sayHelloParse, sayHelloGait);
-	rs.addCmd("mbf", moveBodyWithForceParse, moveBodyWithForceGait);
-	rs.addCmd("mbfs", moveBodyWithForceStopParse, moveBodyWithForceGait);
+	rs.addCmd("fjc", findJointCenterParse, findJointCenterGait);
+	rs.addCmd("cl", calibrationParse, calibrationGait);
 
 	rs.open();
 

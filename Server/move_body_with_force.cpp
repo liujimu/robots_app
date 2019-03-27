@@ -63,6 +63,7 @@ auto moveBodyWithForceGait(aris::dynamic::Model &model, const aris::dynamic::Pla
         pinLowBound[i] = (double)cs.controller().motionAtAbs(i).minPosCount() / cs.controller().motionAtAbs(i).pos2countRatio() + safetyOffset;
     }
     // for test
+/*
     if (param.count == 0)
     {
         rt_printf("pinUpBound:\n %f %f %f\n %f %f %f\n %f %f %f\n %f %f %f\n %f %f %f\n %f %f %f\n",
@@ -74,6 +75,7 @@ auto moveBodyWithForceGait(aris::dynamic::Model &model, const aris::dynamic::Pla
             pinLowBound[6], pinLowBound[7], pinLowBound[8], pinLowBound[9], pinLowBound[10], pinLowBound[11],
             pinLowBound[12], pinLowBound[13], pinLowBound[14], pinLowBound[15], pinLowBound[16], pinLowBound[17]);
     }
+*/
 
     //行走控制
     static bool isWalking{ false };
@@ -84,7 +86,7 @@ auto moveBodyWithForceGait(aris::dynamic::Model &model, const aris::dynamic::Pla
     double F[6]{ 0, 0, 0, 0, 0, 0 };
     double M[6]{ 1, 1, 1, 1, 1, 1 };
     double K[6]{ 0, 0, 0, 0, 0, 0 };
-    double C[6]{ 30, 60, 30, 20, 20, 20 };
+    double C[6]{ 30, 30, 30, 20, 20, 20 };
     double bodyAcc[4]{ 0 };
     static double bodyVel[4]{ 0 };
     static double bodyDisp[4]{ 0 };
@@ -95,8 +97,8 @@ auto moveBodyWithForceGait(aris::dynamic::Model &model, const aris::dynamic::Pla
     double forceOffsetAvg[6]{ 0 };
     double realForceData[6]{ 0 };
     double forceInBody[6]{ 0 };
-    double forceThreshold[6]{ 20, 20, 20, 10, 10, 10 }; //力传感器的触发阈值,单位N或Nm
-    double forceMax[6]{ 100, 100, 100, 50, 50, 50 }; //力的上限
+    double forceThreshold[6]{ 10, 10, 10, 5, 5, 5 }; //力传感器的触发阈值,单位N或Nm
+    double forceMax[6]{ 50, 50, 50, 20, 20, 20 }; //力的上限
 
     double Peb[6], Pee[18];
     std::fill(Peb, Peb + 6, 0);
@@ -116,7 +118,7 @@ auto moveBodyWithForceGait(aris::dynamic::Model &model, const aris::dynamic::Pla
         }
         for (int i = 0; i < 6; i++)
         {
-            forceOffsetSum[i] += 10 * param.fzj_data->at(0).fsr_data[0].fce[i];
+            forceOffsetSum[i] += param.fzj_data->at(0).fsr_data[0].fce[i];
         }
     }
     else
@@ -162,7 +164,7 @@ auto moveBodyWithForceGait(aris::dynamic::Model &model, const aris::dynamic::Pla
             for (int i = 0; i < 6; i++)
             {
                 forceOffsetAvg[i] = forceOffsetSum[i] / 100;
-                realForceData[i] = 10 * param.ruicong_data->at(0).force[0].fce[i] - forceOffsetAvg[i];
+                realForceData[i] = param.fzj_data->at(0).fsr_data[0].fce[i] - forceOffsetAvg[i];
                 //若力超过设定的最大值，则只取最大值
                 if (std::fabs(realForceData[i]) > forceMax[i])
                 {
@@ -170,9 +172,9 @@ auto moveBodyWithForceGait(aris::dynamic::Model &model, const aris::dynamic::Pla
                 }
             }
             //转换到机器人身体坐标系
-            double forceSensorMakPe[6]{ 0, 0, 0, 0, -PI/2, 0 };
-            double forceSensorMakPm[16]{ 0 };
-            aris::dynamic::s_pe2pm(forceSensorMakPe,forceSensorMakPm);
+//            double forceSensorMakPe[6]{ 0, 0, 0, 0, -PI/2, 0 };
+//            double forceSensorMakPm[16]{ 0 };
+//            aris::dynamic::s_pe2pm(forceSensorMakPe,forceSensorMakPm);
             aris::dynamic::s_f2f(*robot.forceSensorMak().prtPm(), realForceData, forceInBody);
             //显示力的初始值
             if (param.count == 100)
@@ -212,8 +214,28 @@ auto moveBodyWithForceGait(aris::dynamic::Model &model, const aris::dynamic::Pla
             }
 
             std::copy(bodyDisp, bodyDisp + 4, Peb);
-            robot.SetPeb(Peb, beginMak, "213");
+            robot.SetPeb(Peb, beginMak, "231");
             robot.SetPee(Pee, beginMak);
+
+            //for test
+            if (param.count % 1000 == 0)
+            {
+                rt_printf("\nrealForceData: %f %f %f %f %f %f\n",
+                    realForceData[0], realForceData[1], realForceData[2],
+                    realForceData[3], realForceData[4], realForceData[5]);
+                rt_printf("forceInBody: %f %f %f %f %f %f\n",
+                    forceInBody[0], forceInBody[1], forceInBody[2],
+                    forceInBody[3], forceInBody[4], forceInBody[5]);
+                rt_printf("F: %f %f %f %f\n",
+                    F[0], F[1], F[2], F[3]);
+                rt_printf("bodyAcc: %f %f %f %f\n",
+                    bodyAcc[0], bodyAcc[1], bodyAcc[2], bodyAcc[3]);
+                rt_printf("bodyVel: %f %f %f %f\n",
+                    bodyVel[0], bodyVel[1], bodyVel[2], bodyVel[3]);
+                rt_printf("bodyDisp: %f %f %f %f\n\n",
+                    bodyDisp[0], bodyDisp[1], bodyDisp[2], bodyDisp[3]);
+            }
+
 
             //行程检测
             double Pin[18]{ 0 };
