@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<RobotXIV>
+<RobotEDU2>
     <Model>
         <Environment gravity="{0 , -9.8 , 0 , 0 , 0 , 0}"/>
         <Variable>
@@ -20,7 +20,7 @@
             <S2jpe type="matrix">{ 0, 0,      0,     0, -PI / 2, 0 }</S2jpe>
             <S3ipe type="matrix">{ 0, 0.050, -0.027, 0, -PI / 2, 0 }</S3ipe>
             <S3jpe type="matrix">{ 0, 0,      0,     0, -PI / 2, 0 }</S3jpe>
-            <Sfipe type="matrix">{ 0.037, 0.006, 0, 0, 0, 0 }</Sfipe>
+            <Sfipe type="matrix">{ 0.071, -0.022, 0, 0, 0, 0 }</Sfipe>
             <Sfjpe type="matrix">{ 0,   0, 0, 0, 0, 0 }</Sfjpe>
             <LFpe type="matrix">{-0.0762, 0, -0.1320, PI/2, PI*2/3,   -PI/2-PI*43.64/180}</LFpe>
             <LMpe type="matrix">{-0.1524, 0,  0,      PI/2, PI*3/3,   -PI/2-PI*43.64/180}</LMpe>
@@ -28,7 +28,7 @@
             <RFpe type="matrix">{ 0.0762, 0, -0.1320, PI/2, PI*1/3,   -PI/2-PI*43.64/180}</RFpe>
             <RMpe type="matrix">{ 0.1524, 0,  0,      PI/2, PI*0/3,   -PI/2-PI*43.64/180}</RMpe>
             <RRpe type="matrix">{ 0.0762, 0,  0.1320, PI/2, PI*5/3,   -PI/2-PI*43.64/180}</RRpe>
-            <ForceSensorMakPe type="matrix">{ 0,0,0,0,-PI/2,0 }</ForceSensorMakPe>
+            <ForceSensorMakPe type="matrix">{ 0,0,0,PI,PI/2,PI }</ForceSensorMakPe>
             <BodyGamma type="matrix">{140,0,0,0,0,0,0,0,0,0}</BodyGamma>
             <P1aGamma type="matrix">{0,0,0,0,0,0,0,0,0,0}</P1aGamma>
             <P2aGamma type="matrix">{0,0,0,0,0,0,0,0,0,0}</P2aGamma>
@@ -37,11 +37,11 @@
             <P2bGamma type="matrix">{0,0,0,0,0,0,0,0,0,0}</P2bGamma>
             <P3bGamma type="matrix">{0,0,0,0,0,0,0,0,0,0}</P3bGamma>
             <Mot_friction type="matrix">{20, 30, 560}</Mot_friction>
-            <P1a_graphic type="string">C:\Robots\resource\Robot_Type_I\Robot_XIV\p1a.x_t</P1a_graphic>
-            <P1b_graphic type="string">C:\Robots\resource\Robot_Type_I\Robot_XIV\p1b.x_t</P1b_graphic>
-            <P23a_graphic type="string">C:\Robots\resource\Robot_Type_I\Robot_XIV\p23a.x_t</P23a_graphic>
-            <P23b_graphic type="string">C:\Robots\resource\Robot_Type_I\Robot_XIV\p23b.x_t</P23b_graphic>
-            <Body_graphic type="string">C:\Robots\resource\Robot_Type_I\Robot_XIV\body.x_t</Body_graphic>
+            <P1a_graphic type="string">C:\Robots\resource\Robot_Type_I\Robot_EDU2\p1a.x_t</P1a_graphic>
+            <P1b_graphic type="string">C:\Robots\resource\Robot_Type_I\Robot_EDU2\p1b_fs.x_t</P1b_graphic>
+            <P23a_graphic type="string">C:\Robots\resource\Robot_Type_I\Robot_EDU2\p23a.x_t</P23a_graphic>
+            <P23b_graphic type="string">C:\Robots\resource\Robot_Type_I\Robot_EDU2\p23b.x_t</P23b_graphic>
+            <Body_graphic type="string">C:\Robots\resource\Robot_Type_I\Robot_EDU2\body.x_t</Body_graphic>
         </Variable>
         <Akima>
             <LF_M1_akima type="akima" x="{0 , 0.05 , 0.1 , 0.15 , 0.2 , 0.25 , 0.3 , 0.35 , 0.4 , 0.45 , 0.5 , 0.55 , 0.6 , 0.65 , 0.7 , 0.75 , 0.8 , 0.85 , 0.9 , 0.95 , 1 , 1.05 , 1.1 , 1.15 , 1.2 , 1.25 , 1.3 , 1.35 , 1.4 , 1.45 , 1.5 , 1.55 , 1.6 , 1.65 , 1.7 , 1.75 , 1.8 , 1.85 , 1.9 , 1.95 , 2 , 2.05 , 2.1 , 2.15 , 2.2 , 2.25 , 2.3 , 2.35 , 2.4 , 2.45 , 2.5 , 2.55 , 2.6 , 2.65 , 2.7 , 2.75 , 2.8 , 2.85 , 2.9 , 2.95 , 3 , 3.05 , 3.1 , 3.15 , 3.2 , 3.25 , 3.3 , 3.35 , 3.4 , 3.45 , 3.5 , 3.55 , 3.6 , 3.65 , 3.7 , 3.75 , 3.8 , 3.85 , 3.9 , 3.95 , 4}" y="{0.877488110747292 , 0.877241294796172 , 0.876508894961439 , 0.875315431705427 , 0.873702251676607 , 0.871727861298556 , 0.869468183691833 , 0.867016533875369 , 0.864483058078454 , 0.861993345805791 , 0.859685908125936 , 0.857708237896588 , 0.856211246805514 , 0.855342028928939 , 0.855235139759068 , 0.856002890229248 , 0.857725492359971 , 0.86044217960822 , 0.864144566072796 , 0.86877342225368 , 0.874219697734826 , 0.880330053476691 , 0.886916491080207 , 0.893769036273326 , 0.900669992220508 , 0.907408113538694 , 0.91379117603717 , 0.919655772539552 , 0.924873651999271 , 0.929354429219066 , 0.933044936057106 , 0.935925805509338 , 0.938006056807902 , 0.939316491881781 , 0.939902650148237 , 0.939817937557184 , 0.939117384879952 , 0.937852330839787 , 0.936066189704804 , 0.933791362175146 , 0.931047285684387 , 0.928122864906579 , 0.925299566352555 , 0.922575361838053 , 0.919948261406942 , 0.917416314914796 , 0.91497761356895 , 0.912630291423796 , 0.910372526830294 , 0.908202543838839 , 0.906118613554862 , 0.904119055446659 , 0.902202238605168 , 0.900366582955539 , 0.898610560420492 , 0.896932696035609 , 0.895331569016811 , 0.893805813780383 , 0.892354120916027 , 0.890975238113474 , 0.889667971043298 , 0.888431184192586 , 0.88726380165621 , 0.886164807884454 , 0.885133248387775 , 0.884168230399481 , 0.883268923497134 , 0.882434560183432 , 0.881664436427326 , 0.880957912166106 , 0.880314411769107 , 0.879733424463677 , 0.879214504723962 , 0.878757272623008 , 0.878361414148606 , 0.87802668148321 , 0.877752893248209 , 0.877539934712695 , 0.877387757966819 , 0.877296382059701 , 0.877265893101781}"/>
@@ -484,8 +484,8 @@
             <start/>
             <stop/>
             <exit/>
-            <cq/>
-            <ro/>
+            <cq />
+            <ro/>				 
             <en default="all">
                 <all abbreviation="a"/>
                 <first abbreviation="f"/>
@@ -594,13 +594,49 @@
                     <height abbreviation="h" type="double" default="0"/>
                 </tw_param>
             </tw>
+            <qg default="qg_param">
+                <qg_param type="group">
+                    <totalCount abbreviation="t" type="int" default="2000"/>
+                    <bodyUp abbreviation="u" type="double" default="0.03"/>
+                    <bodyBack abbreviation="b" type="double" default="0.14"/>
+                    <bodyPitch abbreviation="p" type="double" default="5"/>
+                    <frontFootInnerOffset abbreviation="f" type="double" default="0.2"/>
+                    <middleFootForwardOffset abbreviation="m" type="double" default="0.18"/>
+                    <rearFootOuterOffset abbreviation="r" type="double" default="0.1"/>
+                    <walkStepLength abbreviation="d" type="double" default="0.08"/>
+                    <walkStepHeight abbreviation="h" type="double" default="0.03"/>
+                    <n abbreviation="n" type="int" default="1"/>
+                </qg_param>
+            </qg>
+            <sm default="sm_param">
+                <sm_param type="group">
+                    <totalCount abbreviation="t" type="int" default="120000"/>
+                    <dir_param type="unique" default="y">
+                        <y abbreviation="y"/>
+                        <u abbreviation="u"/>
+                        <w abbreviation="w"/>
+                    </dir_param>
+                    <cycle abbreviation="c" type="double" default="12"/>
+                    <radius abbreviation="r" type="double" default="0.6042"/>
+                </sm_param>
+            </sm>
+            <lf default="lf_param">
+                <lf_param type="group">
+                    <totalCount abbreviation="t" type="int" default="720000"/>
+                    <dir_param type="unique" default="y">
+                        <y abbreviation="y"/>
+                        <u abbreviation="u"/>
+                        <w abbreviation="w"/>
+                    </dir_param>
+                </lf_param>
+            </lf>
         </Commands>
     </Server>
     <Controller>
         <EtherCat>
             <SlaveType>
                 <ElmoSoloWhistle product_code="0x00030924" vender_id="0x0000009a" alias="0" distributed_clock="0x0300">
-                    <PDO>
+                     <PDO>
                         <index_1605 index="0x1605" is_tx="false">
                             <TargetPosition index="0x607A" subindex="0x00" type="int32"/>
                             <TargetVelocity index="0x60FF" subindex="0x00" type="int32"/>
@@ -639,7 +675,7 @@
                     </SDO>
                 </ElmoSoloWhistle>
                 <Faulhaber product_code="0x00002d51" vender_id="0x00000147" alias="0" distributed_clock="0x0300">
-                    <PDO>
+                     <PDO>
                         <index_1600 index="0x1600" is_tx="false">
                             <TargetPosition index="0x607A" subindex="0x00" type="int32"/>
                             <TargetVelocity index="0x60FF" subindex="0x00" type="int32"/>
@@ -674,7 +710,7 @@
                     </SDO>
                 </Faulhaber>
                 <CopleyAE2 product_code="0x00001050" vender_id="0x000000ab" alias="0" distributed_clock="0x0300">
-                    <PDO>
+                     <PDO>
                         <index_1600 index="0x1600" is_tx="false">
                             <A_TargetPosition index="0x607A" subindex="0x00" type="int32"/>
                             <A_TargetVelocity index="0x60FF" subindex="0x00" type="int32"/>
@@ -729,15 +765,14 @@
                 </CopleyAE2>
                 <RuiCongCombo product_code="0x00000036" vender_id="0xe000001b" alias="0">
                     <PDO>
-                        <index_1a01 index="0x1a01" is_tx="true">
-                            <Fx index="0x20d2" subindex="0x01" type="int32"/>
-                            <Fy index="0x20d2" subindex="0x02" type="int32"/>
-                            <Fz index="0x20d2" subindex="0x03" type="int32"/>
-                            <Mx index="0x20d2" subindex="0x04" type="int32"/>
-                            <My index="0x20d2" subindex="0x05" type="int32"/>
-                            <Mz index="0x20d2" subindex="0x06" type="int32"/>
-                        </index_1a01>
-                        <!--
+                      <index_1a01 index="0x1a01" is_tx="true">
+                        <Fx index="0x20d2" subindex="0x01" type="int32"/>
+                        <Fy index="0x20d2" subindex="0x02" type="int32"/>
+                        <Fz index="0x20d2" subindex="0x03" type="int32"/>
+                        <Mx index="0x20d2" subindex="0x04" type="int32"/>
+                        <My index="0x20d2" subindex="0x05" type="int32"/>
+                        <Mz index="0x20d2" subindex="0x06" type="int32"/>
+                      </index_1a01>
                       <index_1a02 index="0x1a02" is_tx="true">
                         <Fx index="0x20dc" subindex="0x01" type="int32"/>
                         <Fy index="0x20dc" subindex="0x02" type="int32"/>
@@ -778,23 +813,30 @@
                         <My index="0x2104" subindex="0x05" type="int32"/>
                         <Mz index="0x2104" subindex="0x06" type="int32"/>
                       </index_1a06>
-                      -->
-                        <index_1600 index="0x1600" is_tx="false">
-                            <Sna index="0x2064" subindex="0x01" type="uint8"/>
-                        </index_1600>
-                        <index_1601 index="0x1601" is_tx="false">
-                            <Snr1 index="0x206e" subindex="0x01" type="uint8"/>
-                            <Snr2 index="0x206e" subindex="0x02" type="uint8"/>
-                            <Snr3 index="0x206e" subindex="0x03" type="uint8"/>
-                            <Snr4 index="0x206e" subindex="0x04" type="uint8"/>
-                            <Snr5 index="0x206e" subindex="0x05" type="uint8"/>
-                            <Snr6 index="0x206e" subindex="0x06" type="uint8"/>
-                            <Snr7 index="0x206e" subindex="0x07" type="uint8"/>
-                            <Snr8 index="0x206e" subindex="0x08" type="uint8"/>
-                        </index_1601>
+ 		      <index_1a07 index="0x1a07" is_tx="true">
+                        <Fx index="0x210e" subindex="0x01" type="int32"/>
+                        <Fy index="0x210e" subindex="0x02" type="int32"/>
+                        <Fz index="0x210e" subindex="0x03" type="int32"/>
+                        <Mx index="0x210e" subindex="0x04" type="int32"/>
+                        <My index="0x210e" subindex="0x05" type="int32"/>
+                        <Mz index="0x210e" subindex="0x06" type="int32"/>
+                      </index_1a07>
+                     <index_1600 index="0x1600" is_tx="false">
+                        <Sna index="0x2064" subindex="0x01" type="uint8"/>
+                      </index_1600>
+                      <index_1601 index="0x1601" is_tx="false">
+                        <Snr1 index="0x206e" subindex="0x01" type="uint8"/>
+                        <Snr2 index="0x206e" subindex="0x02" type="uint8"/>
+                        <Snr3 index="0x206e" subindex="0x03" type="uint8"/>
+                        <Snr4 index="0x206e" subindex="0x04" type="uint8"/>
+                        <Snr5 index="0x206e" subindex="0x05" type="uint8"/>
+                        <Snr6 index="0x206e" subindex="0x06" type="uint8"/>
+                        <Snr7 index="0x206e" subindex="0x07" type="uint8"/>
+                        <Snr8 index="0x206e" subindex="0x08" type="uint8"/>
+                      </index_1601>
                     </PDO>
                     <SDO>
-                        <Sync index="0x2064" subindex="0x0" type="uint8" write="false"/>
+                      <Sync index="0x2064" subindex="0x0" type="uint8" write="false"/>
                     </SDO>
                 </RuiCongCombo>
                 <AtiForceSensor product_code="0x26483052" vender_id="0x00000732" alias="0">
@@ -900,4 +942,4 @@
         <IMU active="false" type="xsens_imu" portLinux="/dev/ttyUSB0" baudRate="921600" sampleRate="400" PeImuGround2BodyGound="{0,0,0,0,-PI/2,PI}" PeImu2Body="{0,0,0,0,PI/2,0}"/>
         <Vision type="kinect2.0"/>
     </Sensors>
-</RobotXIV>
+</RobotEDU2>

@@ -9,16 +9,7 @@
 using namespace std;
 
 #include <aris.h>
-#include <Robot_Gait.h>
 #include <Robot_Type_I.h>
-
-#include "swing.h"
-#include "move_body.h"
-#include "twist_waist.h"
-#include "say_hello.h"
-#include "move_body_with_force.h"
-#include "find_joint_center.h"
-#include "calibration.h"
 
 #ifdef WIN32
 #define rt_printf printf
@@ -28,61 +19,74 @@ using namespace std;
 #include "unistd.h"
 #endif
 
+#include "move_body.h"
+#include "adjust_pee.h"
+#include "swing.h"
+#include "twist_waist.h"
+#include "say_hello.h"
+#include "quadruped_gait.h"
+#include "sine_motion.h"
+#include "load_file.h"
 
 int main(int argc, char *argv[])
 {
-	std::string xml_address;
+    std::string xml_address;
 
-	if (std::string(argv[1]) == "EDU6")
-	{
-		xml_address = "../../resource/RobotEDU6.xml";
-	}
-	else if (std::string(argv[1]) == "EDU6C")
-	{
-		xml_address = "../../resource/RobotEDU6_cali.xml";
-	}
-	else if (std::string(argv[1]) == "EDU6CP")
-	{
-		xml_address = "../../resource/RobotEDU6_comp.xml";
-	}
-	else
-	{
-		throw std::runtime_error("invalid robot name, please type in EDU6");
-	}
-	
-	auto &rs = aris::server::ControlServer::instance();
-	
+    if (argc <= 1)
+    {
+        std::cout << "you did not type in robot name, in this case ROBOT-VIII will start" << std::endl;
+        xml_address = "/usr/Robots/resource/Robot_Type_I/Robot_VIII/Robot_VIII.xml";
+    }
+    else if (std::string(argv[1]) == "EDU2")
+    {
+        xml_address = "../../resource/RobotEDU2.xml";
+    }
+    else if (std::string(argv[1]) == "EDU2_test")
+    {
+        xml_address = "../../resource/RobotEDU2_test.xml";
+    }
+    else
+    {
+        throw std::runtime_error("invalid robot name, please type in III or VIII");
+    }
 
-	rs.createModel<Robots::RobotTypeI>();
-	rs.loadXml(xml_address.c_str());
-	rs.addCmd("en", Robots::basicParse, nullptr);
-	rs.addCmd("ds", Robots::basicParse, nullptr);
-	rs.addCmd("hm", Robots::basicParse, nullptr);
-	rs.addCmd("rc", Robots::recoverParse, Robots::recoverGait);
-	rs.addCmd("wk", Robots::walkParse, Robots::walkGait);
-	rs.addCmd("ro", Robots::resetOriginParse, Robots::resetOriginGait);
+    auto &rs = aris::server::ControlServer::instance();
+
+    rs.createModel<Robots::RobotTypeI>();
+    rs.loadXml(xml_address.c_str());
+    rs.addCmd("en", Robots::basicParse, nullptr);
+    rs.addCmd("ds", Robots::basicParse, nullptr);
+    rs.addCmd("hm", Robots::basicParse, nullptr);
+    rs.addCmd("rc", Robots::recoverParse, Robots::recoverGait);
+    rs.addCmd("wk", Robots::walkParse, Robots::walkGait);
+    rs.addCmd("ro", Robots::resetOriginParse, Robots::resetOriginGait);
+
+	//liujimu's gaits
 	rs.addCmd("mb", moveBodyParse, moveBodyGait);
-	rs.addCmd("mbf", moveBodyWithForceParse, moveBodyWithForceGait);
-	rs.addCmd("mbfs", moveBodyWithForceStopParse, moveBodyWithForceGait);
+	rs.addCmd("ap", moveBodyParse, moveBodyGait);
 	rs.addCmd("sw", swingParse, swingGait);
 	rs.addCmd("tw", twistWaistParse, twistWaistGait);
 	rs.addCmd("sh", sayHelloParse, sayHelloGait);
-	rs.addCmd("fjc", findJointCenterParse, findJointCenterGait);
-	rs.addCmd("cl", calibrationParse, calibrationGait);
+    rs.addCmd("qg",quadrupedGaitParse,quadrupedGait);
+    rs.addCmd("sm",sineMotionParse,sineMotionGait);
+    LoadFile loadfile;
+    rs.addCmd("lf",loadfile.loadFileParse,loadfile.loadFileGait);
+    LoadFile::recordData();
 
-	rs.open();
+    rs.open();
 
-	rs.setOnExit([&]() 
-	{
-		aris::core::XmlDocument xml_doc;
-		xml_doc.LoadFile(xml_address.c_str());
-		auto model_xml_ele = xml_doc.RootElement()->FirstChildElement("Model");
-		if (!model_xml_ele)throw std::runtime_error("can't find Model element in xml file");
-		rs.model().saveXml(*model_xml_ele);
-		
-		aris::core::stopMsgLoop();
-	});
-	aris::core::runMsgLoop();
-	
+    rs.setOnExit([&]()
+    {
+        aris::core::XmlDocument xml_doc;
+        xml_doc.LoadFile(xml_address.c_str());
+        auto model_xml_ele = xml_doc.RootElement()->FirstChildElement("Model");
+        if (!model_xml_ele)throw std::runtime_error("can't find Model element in xml file");
+        rs.model().saveXml(*model_xml_ele);
+
+        aris::core::stopMsgLoop();
+    });
+    aris::core::runMsgLoop();
+
+
 	return 0;
 }
