@@ -20,17 +20,25 @@ auto moveOneLegParse(const std::string &cmd, const std::map<std::string, std::st
         {
             param.totalCount = std::stoi(i.second);
         }
-        else if (i.first == "d")
+        else if (i.first == "leg_id")
         {
-            param.d = std::stod(i.second);
+            param.leg_id = std::stoi(i.second);
+            if (param.leg_id < 0 || param.leg_id > 5)
+                throw std::runtime_error("invalid leg_id");
+            std::fill_n(param.active_motor, 18, false);
+            std::fill_n(param.active_motor + param.leg_id * 3, 3, true);
         }
-        else if (i.first == "h")
+        else if (i.first == "x")
         {
-            param.h = std::stod(i.second);
+            param.x = std::stod(i.second);
         }
-        else if (i.first == "l")
+        else if (i.first == "y")
         {
-            param.legID = std::stoi(i.second);
+            param.y = std::stod(i.second);
+        }
+        else if (i.first == "z")
+        {
+            param.z = std::stod(i.second);
         }
     }
 
@@ -45,6 +53,7 @@ auto moveOneLegGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamB
     //初始化
     static aris::dynamic::FloatMarker beginMak{ robot.ground() };
     static double beginPee[18];
+
     if (param.count == 0)
     {
         beginMak.setPrtPm(*robot.body().pm());
@@ -52,21 +61,26 @@ auto moveOneLegGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamB
         robot.GetPee(beginPee, beginMak);
     }
 
-    double Peb[6], Pee[18];
-    std::fill(Peb, Peb + 6, 0);
-	std::copy(beginPee, beginPee + 18, Pee);
+    double Peb[6], legPee[3];
+    //std::fill(Peb, Peb + 6, 0);
+    std::copy_n(beginPee + param.leg_id * 3, 3, legPee);
+    
+    const double s = -0.5 * cos(PI * (param.count + 1) / param.totalCount) + 0.5; //s从0到1. 
+    const double disp[3]{ param.x, param.y, param.z };
 
-	const double s = -0.5 * cos(PI * (param.count + 1) / param.totalCount) + 0.5; //s从0到1. 
+    for (int i = 0; i < 3; ++i)
+    {
+        legPee[i] += disp[i]*(1 - std::cos(PI*s)) / 2;
+    }
 
-    const int i = param.legID;
-    const double d = param.d;
-    const double h = param.h;
+    robot.pLegs[param.leg_id]->SetPee(legPee);
 
-    Pee[i * 3 + 1] += h*std::sin(PI*s);
-    Pee[i * 3 + 2] += -d*(1 - std::cos(PI*s)) / 2;
-
-    robot.SetPeb(Peb, beginMak);
-    robot.SetPee(Pee, beginMak);
+    //test
+    if (param.count == 0)
+    {
+        rt_printf("leg_id: %d\n", param.leg_id);
+        rt_printf("legPee: %f, %f, %f\n", legPee[0], legPee[1], legPee[2]);
+    }
 
     return param.totalCount - param.count - 1;
 }

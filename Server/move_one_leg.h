@@ -6,10 +6,11 @@
 /*
             <mol default="mol_param">
                 <mol_param type="group">
-                    <totalCount abbreviation="t" type="int" default="2000"/>
-                    <d abbreviation="d" type="double" default="0"/>
-                    <h abbreviation="h" type="double" default="0.05"/>
-                    <legID abbreviation="l" type="int" default="0"/>
+                    <totalCount abbreviation="t" type="int" default="3000"/>
+                    <leg_id abbreviation="l" type="int" default="0"/>
+                    <x abbreviation="x" type="double" default="0"/>
+                    <y abbreviation="y" type="double" default="0"/>
+                    <z abbreviation="z" type="double" default="0"/>
                 </mol_param>
             </mol>
 */
@@ -37,9 +38,10 @@
 struct molParam final:public aris::server::GaitParamBase
 {
     std::int32_t totalCount{ 2000 };
-    double d{ 0.3 };
-    double h{ 0.05 };
-    int legID{ 0 };
+    int leg_id{ 0 };
+    double x{ 0 };
+    double y{ 0 };
+    double z{ 0 };
 };
 
 auto moveOneLegParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg)->void;

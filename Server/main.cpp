@@ -13,6 +13,7 @@ using namespace std;
 #include <Robot_Type_I.h>
 
 #include "move_body.h"
+#include "move_one_leg.h"
 #include "adjust_pee.h"
 #include "swing.h"
 #include "twist_waist.h"
@@ -36,11 +37,11 @@ int main(int argc, char *argv[])
 	if (argc <= 1)
 	{
 		std::cout << "you did not type in robot name, in this case ROBOT-XIII will start" << std::endl;
-		xml_address = "../../resource/Robot_XIII.xml";
+		xml_address = "../../robots_app/resource/Robot_XIII.xml";
 	}
-	else if (std::string(argv[1]) == "XIII")
+	else if (std::string(argv[1]) == "III")
 	{
-		xml_address = "../../resource/Robot_XIII.xml";
+		xml_address = "/usr/Robots/resource/Robot_Type_I/Robot_III/Robot_III.xml";
 	}
 	else
 	{
@@ -61,6 +62,7 @@ int main(int argc, char *argv[])
 	
 	//liujimu's gaits
 	rs.addCmd("mb", moveBodyParse, moveBodyGait);
+	rs.addCmd("mol", moveOneLegParse, moveOneLegGait);
 	rs.addCmd("ap", moveBodyParse, moveBodyGait);
 	rs.addCmd("sw", swingParse, swingGait);
 	rs.addCmd("tw", twistWaistParse, twistWaistGait);
@@ -82,7 +84,5 @@ int main(int argc, char *argv[])
 	});
 	aris::core::runMsgLoop();
 	
-	
-
 	return 0;
 }

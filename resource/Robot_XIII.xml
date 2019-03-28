@@ -511,6 +511,12 @@
                 <leg abbreviation="l" type="intArray" default="0"/>
             </hm>
             <fake_home/>
+            <zrc default="all">
+                <all abbreviation="a"/>
+                <first abbreviation="f"/>
+                <second abbreviation="s"/>
+                <leg abbreviation="l" type="intArray" default="0"/>
+            </zrc>
             <rc default="rc_param">
                 <rc_param type="group">
                     <leg_param type="unique" default="all">
@@ -522,6 +528,7 @@
                     <t1 abbreviation="t" type="intArray" default="3000"/>
                     <t2 type="intArray" default="3000"/>
                     <margin_offset abbreviation="m" type="double" default="0.01"/>
+	            <require_zero abbreviation="z" type="double" default="0"/>
                 </rc_param>
             </rc>
             <wk default="wk_param">
@@ -534,31 +541,6 @@
                     <beta abbreviation="b" type="double" default="0"/>
                 </wk_param>
             </wk>
-            <vwk default="VISION_WALK_PARAM">
-                <VISION_WALK_PARAM type="group">
-                    <orentation abbreviation="o" type="int" default="0"/>
-                    <number abbreviation="n" type="int" default="4"/>
-                </VISION_WALK_PARAM>
-            </vwk>
-            <swk/>
-            <sdwk/>
-            <ssdwk/>
-            <up20 default="up20_param">
-                 <up20_param type="group">
-                     <stepHeight abbreviation="s" type="double" default="0.20"/>
-                     <bodyHeight abbreviation="b" type="double" default="1.03"/>
-                     <normalHeight abbreviation="n" type="double" default="0.05"/>
-                     <footMoveTime abbreviation="t" type="int" default="6000"/>
-                 </up20_param>
-            </up20>
-            <dw20 default="dw20_param">
-                 <dw20_param type="group">
-                     <stepHeight abbreviation="s" type="double" default="0.20"/>
-                     <bodyHeight abbreviation="b" type="double" default="0.83"/>
-                     <normalHeight abbreviation="n" type="double" default="0.05"/>
-                     <footMoveTime abbreviation="t" type="int" default="6000"/>
-                 </dw20_param>
-            </dw20>
             <ro/>
             <mb default="mb_param">
                 <mb_param type="group">
@@ -571,6 +553,15 @@
                     <roll abbreviation="w" type="double" default="0"/>
                 </mb_param>
             </mb>
+            <mol default="mol_param">
+                <mol_param type="group">
+                    <totalCount abbreviation="t" type="int" default="3000"/>
+                    <leg_id abbreviation="l" type="int" default="0"/>
+                    <x abbreviation="x" type="double" default="0"/>
+                    <y abbreviation="y" type="double" default="0"/>
+                    <z abbreviation="z" type="double" default="0"/>
+                </mol_param>
+            </mol>
             <ap default="ap_param">
                 <ap_param type="group">
                     <totalCount abbreviation="t" type="int" default="3000"/>
@@ -581,38 +572,38 @@
             </ap>
             <sw default="sw_param">
                 <sw_param type="group">
-                    <totalCount abbreviation="t" type="int" default="8000"/>
+                    <totalCount abbreviation="t" type="int" default="12000"/>
                     <xAngle abbreviation="x" type="double" default="0"/>
                     <zAngle abbreviation="z" type="double" default="0"/>
                     <yAngle abbreviation="y" type="double" default="0"/>
                     <rDistance abbreviation="r" type="double" default="0.6"/>
-                    <yDistance abbreviation="d" type="double" default="0.05"/>
+                    <yDistance abbreviation="d" type="double" default="-0.05"/>
                 </sw_param>
             </sw>
-			<tw default="tw_param">
+            <tw default="tw_param">
                 <tw_param type="group">
-                    <totalCount abbreviation="t" type="int" default="12000"/>
-                    <pitchMax abbreviation="p" type="double" default="10"/>
-                    <rollMax abbreviation="r" type="double" default="10"/>
-                    <diameter abbreviation="d" type="double" default="0.1"/>
-                    <height abbreviation="h" type="double" default="0.05"/>
+                    <totalCount abbreviation="t" type="int" default="24000"/>
+                    <pitchMax abbreviation="p" type="double" default="15"/>
+                    <rollMax abbreviation="r" type="double" default="15"/>
+                    <diameter abbreviation="d" type="double" default="0.15"/>
+                    <height abbreviation="h" type="double" default="0.04"/>
                 </tw_param>
             </tw>
-			<sh default="sh_param">
+            <sh default="sh_param">
                 <sh_param type="group">
-                    <totalCount abbreviation="t" type="int" default="2000"/>
-                    <stepLength abbreviation="d" type="double" default="0.2"/>
+                    <totalCount abbreviation="t" type="int" default="4000"/>
+                    <stepLength abbreviation="d" type="double" default="0.4"/>
                     <stepHeight abbreviation="h" type="double" default="0.05"/>
-                    <bodyUp abbreviation="u" type="double" default="0.04"/>
+                    <bodyUp abbreviation="u" type="double" default="0.15"/>
                     <bodyPitch abbreviation="p" type="double" default="20"/>
                     <helloAmplitude abbreviation="a" type="double" default="0.1"/>
                     <helloTimes abbreviation="n" type="int" default="1"/>
-					<direction type="unique" default="backward">
+                    <dir_param type="unique" default="backward">
                         <forward abbreviation="f"/>
                         <backward abbreviation="b"/>
-					</direction>
+                    </dir_param>
                 </sh_param>
-			</sh>
+            </sh>
             <fjc default="fjc_param">
                 <fjc_param type="group">
                     <totalCount abbreviation="t" type="int" default="12000"/>
@@ -632,7 +623,7 @@
                     </cmd_param>
                 </cl_param>
             </cl>
-			</Commands>
+        </Commands>
     </Server>
     <Controller>
         <EtherCat>
@@ -665,9 +656,9 @@
                     </PDO>
                     <SDO>
                         <homeMode index="0x6098" subindex="0" type="int8" config="-1"/>
-                        <homeAcc index="0x609A" subindex="0" type="uint32" config="200000"/>
-                        <homeHighSpeed index="0x6099" subindex="1" type="uint32" config="200000"/>
-                        <homeLowSpeed index="0x6099" subindex="2" type="uint32" config="100000"/>
+                        <homeAcc index="0x609A" subindex="0" type="uint32" config="500000"/>
+                        <homeHighSpeed index="0x6099" subindex="1" type="uint32" config="1000000"/>
+                        <homeLowSpeed index="0x6099" subindex="2" type="uint32" config="500000"/>
                         <RatioOfPosDivVel_Numerator index="0x6096" subindex="1" type="uint32" config="1"/>
                         <RatioOfPosDivVel_Divisor index="0x6096" subindex="2" type="uint32" config="1"/>
                         <homeTorqueLimit index="0x2020" subindex="1" type="int32" config="950"/>
@@ -698,31 +689,100 @@
                         <TorqueUnit index="0x2040" subindex="0x32" type="int32" write="false"/>
                     </SDO>
                 </AtiForceSensor>
+              <RuiCongCombo product_code="0x00000036" vender_id="0xe000001b" alias="0">
+              <PDO>
+                  <index_1a01 index="0x1a01" is_tx="true">
+                    <Fx index="0x20d2" subindex="0x01" type="int32"/>
+                    <Fy index="0x20d2" subindex="0x02" type="int32"/>
+                    <Fz index="0x20d2" subindex="0x03" type="int32"/>
+                    <Mx index="0x20d2" subindex="0x04" type="int32"/>
+                    <My index="0x20d2" subindex="0x05" type="int32"/>
+                    <Mz index="0x20d2" subindex="0x06" type="int32"/>
+                  </index_1a01>
+                  <index_1a02 index="0x1a02" is_tx="true">
+                    <Fx index="0x20dc" subindex="0x01" type="int32"/>
+                    <Fy index="0x20dc" subindex="0x02" type="int32"/>
+                    <Fz index="0x20dc" subindex="0x03" type="int32"/>
+                    <Mx index="0x20dc" subindex="0x04" type="int32"/>
+                    <My index="0x20dc" subindex="0x05" type="int32"/>
+                    <Mz index="0x20dc" subindex="0x06" type="int32"/>
+                  </index_1a02>
+                  <index_1a03 index="0x1a03" is_tx="true">
+                    <Fx index="0x20e6" subindex="0x01" type="int32"/>
+                    <Fy index="0x20e6" subindex="0x02" type="int32"/>
+                    <Fz index="0x20e6" subindex="0x03" type="int32"/>
+                    <Mx index="0x20e6" subindex="0x04" type="int32"/>
+                    <My index="0x20e6" subindex="0x05" type="int32"/>
+                    <Mz index="0x20e6" subindex="0x06" type="int32"/>
+                  </index_1a03>
+                  <index_1a04 index="0x1a04" is_tx="true">
+                    <Fx index="0x20f0" subindex="0x01" type="int32"/>
+                    <Fy index="0x20f0" subindex="0x02" type="int32"/>
+                    <Fz index="0x20f0" subindex="0x03" type="int32"/>
+                    <Mx index="0x20f0" subindex="0x04" type="int32"/>
+                    <My index="0x20f0" subindex="0x05" type="int32"/>
+                    <Mz index="0x20f0" subindex="0x06" type="int32"/>
+                  </index_1a04>
+                  <index_1a05 index="0x1a05" is_tx="true">
+                    <Fx index="0x20fa" subindex="0x01" type="int32"/>
+                    <Fy index="0x20fa" subindex="0x02" type="int32"/>
+                    <Fz index="0x20fa" subindex="0x03" type="int32"/>
+                    <Mx index="0x20fa" subindex="0x04" type="int32"/>
+                    <My index="0x20fa" subindex="0x05" type="int32"/>
+                    <Mz index="0x20fa" subindex="0x06" type="int32"/>
+                  </index_1a05>
+                  <index_1a06 index="0x1a06" is_tx="true">
+                    <Fx index="0x2104" subindex="0x01" type="int32"/>
+                    <Fy index="0x2104" subindex="0x02" type="int32"/>
+                    <Fz index="0x2104" subindex="0x03" type="int32"/>
+                    <Mx index="0x2104" subindex="0x04" type="int32"/>
+                    <My index="0x2104" subindex="0x05" type="int32"/>
+                    <Mz index="0x2104" subindex="0x06" type="int32"/>
+                  </index_1a06>
+                  <index_1600 index="0x1600" is_tx="false">
+                    <Sna index="0x2064" subindex="0x01" type="uint8"/>
+                  </index_1600>
+                  <index_1601 index="0x1601" is_tx="false">
+                    <Snr1 index="0x206e" subindex="0x01" type="uint8"/>
+                    <Snr2 index="0x206e" subindex="0x02" type="uint8"/>
+                    <Snr3 index="0x206e" subindex="0x03" type="uint8"/>
+                    <Snr4 index="0x206e" subindex="0x04" type="uint8"/>
+                    <Snr5 index="0x206e" subindex="0x05" type="uint8"/>
+                    <Snr6 index="0x206e" subindex="0x06" type="uint8"/>
+                    <Snr6 index="0x206e" subindex="0x07" type="uint8"/>
+                    <Snr6 index="0x206e" subindex="0x08" type="uint8"/>
+                  </index_1601>
+                </PDO>
+                <SDO>
+                  <Sync index="0x2064" subindex="0x0" type="uint8" write="false"/>
+                </SDO>
+              </RuiCongCombo>
             </SlaveType>
             <Slave>
-                <Motion1 type="ElmoSoloWhistle"  min_pos="0.690" max_pos="1.100" max_vel="0.1706" home_pos="0.690" input2count="51200000" abs_id="16"/>
-                <Motion2 type="ElmoSoloWhistle"  min_pos="0.669" max_pos="1.080" max_vel="0.1706" home_pos="0.669" input2count="51200000" abs_id="15"/>
-                <Motion3 type="ElmoSoloWhistle"  min_pos="0.690" max_pos="1.100" max_vel="0.1706" home_pos="0.690" input2count="51200000" abs_id="17"/>
-                <Motion4 type="ElmoSoloWhistle"  min_pos="0.690" max_pos="1.100" max_vel="0.1706" home_pos="0.690" input2count="51200000" abs_id="13"/>
-                <Motion5 type="ElmoSoloWhistle"  min_pos="0.669" max_pos="1.080" max_vel="0.1706" home_pos="0.669" input2count="51200000" abs_id="12"/>
-                <Motion6 type="ElmoSoloWhistle"  min_pos="0.690" max_pos="1.100" max_vel="0.1706" home_pos="0.690" input2count="51200000" abs_id="14"/>
-                <Motion7 type="ElmoSoloWhistle"  min_pos="0.690" max_pos="1.100" max_vel="0.1706" home_pos="0.690" input2count="51200000" abs_id="10"/>
-                <Motion8 type="ElmoSoloWhistle"  min_pos="0.669" max_pos="1.080" max_vel="0.1706" home_pos="0.669" input2count="51200000" abs_id="9"/>
-                <Motion9 type="ElmoSoloWhistle"  min_pos="0.690" max_pos="1.100" max_vel="0.1706" home_pos="0.690" input2count="51200000" abs_id="11"/>
-                <Motion10 type="ElmoSoloWhistle" min_pos="0.690" max_pos="1.100" max_vel="0.1706" home_pos="0.690" input2count="51200000" abs_id="1"/>
-                <Motion11 type="ElmoSoloWhistle" min_pos="0.669" max_pos="1.080" max_vel="0.1706" home_pos="0.669" input2count="51200000" abs_id="0"/>
-                <Motion12 type="ElmoSoloWhistle" min_pos="0.690" max_pos="1.100" max_vel="0.1706" home_pos="0.690" input2count="51200000" abs_id="2"/>
-                <Motion13 type="ElmoSoloWhistle" min_pos="0.690" max_pos="1.100" max_vel="0.1706" home_pos="0.690" input2count="51200000" abs_id="4"/>
-                <Motion14 type="ElmoSoloWhistle" min_pos="0.669" max_pos="1.080" max_vel="0.1706" home_pos="0.669" input2count="51200000" abs_id="3"/>
-                <Motion15 type="ElmoSoloWhistle" min_pos="0.690" max_pos="1.100" max_vel="0.1706" home_pos="0.690" input2count="51200000" abs_id="5"/>
-                <Motion16 type="ElmoSoloWhistle" min_pos="0.690" max_pos="1.100" max_vel="0.1706" home_pos="0.690" input2count="51200000" abs_id="7"/>
-                <Motion17 type="ElmoSoloWhistle" min_pos="0.669" max_pos="1.080" max_vel="0.1706" home_pos="0.669" input2count="51200000" abs_id="6"/>
-                <Motion18 type="ElmoSoloWhistle" min_pos="0.690" max_pos="1.100" max_vel="0.1706" home_pos="0.690" input2count="51200000" abs_id="8"/>
-            </Slave>
+                <Motion1 type="ElmoSoloWhistle"  min_pos="0.690" max_pos="1.100" max_vel="0.1706" home_pos="0.690" input2count="51200000" abs_id="8"/>
+                <Motion2 type="ElmoSoloWhistle"  min_pos="0.669" max_pos="1.080" max_vel="0.1706" home_pos="0.669" input2count="51200000" abs_id="6"/>
+                <Motion3 type="ElmoSoloWhistle"  min_pos="0.690" max_pos="1.100" max_vel="0.1706" home_pos="0.690" input2count="51200000" abs_id="7"/>
+                <Motion4 type="ElmoSoloWhistle"  min_pos="0.690" max_pos="1.100" max_vel="0.1706" home_pos="0.690" input2count="51200000" abs_id="5"/>
+                <Motion5 type="ElmoSoloWhistle"  min_pos="0.669" max_pos="1.080" max_vel="0.1706" home_pos="0.669" input2count="51200000" abs_id="3"/>
+                <Motion6 type="ElmoSoloWhistle"  min_pos="0.690" max_pos="1.100" max_vel="0.1706" home_pos="0.690" input2count="51200000" abs_id="4"/>
+                <Motion7 type="ElmoSoloWhistle"  min_pos="0.669" max_pos="1.080" max_vel="0.1706" home_pos="0.669" input2count="51200000" abs_id="0"/>
+                <Motion8 type="ElmoSoloWhistle"  min_pos="0.690" max_pos="1.100" max_vel="0.1706" home_pos="0.690" input2count="51200000" abs_id="2"/>
+                <Motion9 type="ElmoSoloWhistle"  min_pos="0.690" max_pos="1.100" max_vel="0.1706" home_pos="0.690" input2count="51200000" abs_id="1"/>
+                <Motion10 type="ElmoSoloWhistle" min_pos="0.690" max_pos="1.100" max_vel="0.1706" home_pos="0.690" input2count="51200000" abs_id="11"/>
+                <Motion11 type="ElmoSoloWhistle" min_pos="0.669" max_pos="1.080" max_vel="0.1706" home_pos="0.669" input2count="51200000" abs_id="9"/>
+                <Motion12 type="ElmoSoloWhistle" min_pos="0.690" max_pos="1.100" max_vel="0.1706" home_pos="0.690" input2count="51200000" abs_id="10"/>
+                <Motion13 type="ElmoSoloWhistle" min_pos="0.690" max_pos="1.100" max_vel="0.1706" home_pos="0.690" input2count="51200000" abs_id="14"/>
+                <Motion14 type="ElmoSoloWhistle" min_pos="0.669" max_pos="1.080" max_vel="0.1706" home_pos="0.669" input2count="51200000" abs_id="12"/>
+                <Motion15 type="ElmoSoloWhistle" min_pos="0.690" max_pos="1.100" max_vel="0.1706" home_pos="0.690" input2count="51200000" abs_id="13"/>
+                <Motion16 type="ElmoSoloWhistle" min_pos="0.690" max_pos="1.100" max_vel="0.1706" home_pos="0.690" input2count="51200000" abs_id="17"/>
+                <Motion17 type="ElmoSoloWhistle" min_pos="0.669" max_pos="1.080" max_vel="0.1706" home_pos="0.669" input2count="51200000" abs_id="15"/>
+                <Motion18 type="ElmoSoloWhistle" min_pos="0.690" max_pos="1.100" max_vel="0.1706" home_pos="0.690" input2count="51200000" abs_id="16"/>
+            	<ForceSensor type="RuiCongCombo"/>
+	    </Slave>
         </EtherCat>
     </Controller>
     <Sensors>
-        <IMU active="false" type="xsens_imu" portLinux="/dev/ttyUSB0" baudRate="921600" sampleRate="400" PeImuGround2BodyGound="{0,0,0,0,-PI/2,PI}" PeImu2Body="{0,0,0,0,PI/2,0}"/>
+        <IMU active="false" type="xsens_imu" portLinux="/dev/ttyUSB0" baudRate="921600" sampleRate="400" PeImuGround2BodyGound="{0,0,0,PI,PI/2,PI}" PeImu2Body="{0,0,0,0,PI/2,PI}"/>
         <Vision type="kinect2.0"/>
     </Sensors>
 </RobotXIII>

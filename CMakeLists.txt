@@ -109,7 +109,8 @@ include_directories(${ALL_INCL_DIR})
 link_directories(${ALL_LINK_DIR})
 
 ################################### build server ####################################
-set(SOURCE_FILES main.cpp move_body.cpp adjust_pee.cpp swing.cpp twist_waist.cpp say_hello.cpp find_joint_center.cpp calibration.cpp)
+#set(SOURCE_FILES main.cpp)
+set(SOURCE_FILES main.cpp move_body.cpp move_one_leg.cpp adjust_pee.cpp swing.cpp twist_waist.cpp say_hello.cpp find_joint_center.cpp calibration.cpp)
 PREPEND(FULL_SRC Server ${SOURCE_FILES})
 add_executable(Server ${FULL_SRC})
 target_link_libraries(Server ${ALL_LINK_LIB})
