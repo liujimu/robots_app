@@ -1,6 +1,7 @@
 #!/bin/bash
 
-spos=18
+spos=$(/opt/etherlab/bin/ethercat sla | grep Compact | grep -Po '\d+\s+\d+:\K(\d+)')
+echo 'The FSR is found at' $spos
 
 echo 'write some shit to the sync manager at first to make the anybus chip happy'
 /opt/etherlab/bin/ethercat state INIT
@@ -22,7 +23,7 @@ sleep 2
 /opt/etherlab/bin/ethercat download -a 0 -t uint8 -p $spos 0x1c13 0 0
 
 subindex=1
-for pdo_entries in 0x1a01 ; do
+for pdo_entries in 0x1a01 0x1a02 0x1a03 0x1a04 0x1a05 0x1a06; do
 	echo 'set sm pdos entries'
 	echo $pdo_entries
 	echo $subindex
