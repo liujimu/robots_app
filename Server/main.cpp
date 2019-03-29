@@ -20,7 +20,7 @@ using namespace std;
 #endif
 
 #include "move_body.h"
-#include "adjust_pee.h"
+#include "move_body_with_force.h"
 #include "swing.h"
 #include "twist_waist.h"
 #include "say_hello.h"
@@ -63,7 +63,8 @@ int main(int argc, char *argv[])
 
 	//liujimu's gaits
 	rs.addCmd("mb", moveBodyParse, moveBodyGait);
-	rs.addCmd("ap", moveBodyParse, moveBodyGait);
+	rs.addCmd("mbf", moveBodyWithForceParse, moveBodyWithForceGait);
+	rs.addCmd("mbfs", moveBodyWithForceStopParse, moveBodyWithForceGait);
 	rs.addCmd("sw", swingParse, swingGait);
 	rs.addCmd("tw", twistWaistParse, twistWaistGait);
 	rs.addCmd("sh", sayHelloParse, sayHelloGait);
